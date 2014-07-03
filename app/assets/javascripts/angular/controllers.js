@@ -6,24 +6,22 @@ imageTournamentControllers.controller('ContestCtrl', ['$scope', 'localStorageSer
 	Contest.currentRound().success(function (data) {
 		$scope.contest = data;
 		var imagePairs = Contest.pairImages(data.images);
-		prefillChosen(imagePairs);
+		Contest.prefillChosen(imagePairs);
 		$scope.imagePairs = imagePairs;
+		$scope.roundFinished = isRoundFinished(imagePairs);
 	});
 
-	// Prefill the image objects within imagePairs with chosen values
-	// The image["chosen"] === "chosen" if the user chose that image, otherwise empty.
-	function prefillChosen(imagePairs){
-		var i = 0;
-		for (i = 0; i < imagePairs.length; i++) {
-			var chosen = localStorageService.get((i+1).toString());
-			imagePairs[i][0]["chosen"] = "";
-			imagePairs[i][1]["chosen"] = "";
-			if (chosen !== null) {
-				imagePairs[i][0]["chosen"] = "not-chosen";
-				imagePairs[i][1]["chosen"] = "not-chosen";
-				imagePairs[i][chosen]["chosen"] = "chosen";
+	// Returns true if the round is finished.
+	// Searches through all image pair objects to find any that
+	// do not have one of them chosen.
+	function isRoundFinished(imagePairs){
+		var allChosen = true;
+		angular.forEach(imagePairs, function(imagePair){
+			if (imagePair[0]["chosen"] !== "chosen" && imagePair[1]["chosen"] !== "chosen") {
+				allChosen = false;
 			}
-		}
+		});
+		return allChosen;
 	}
 
 }]);
@@ -33,6 +31,7 @@ imageTournamentControllers.controller('ChoiceCtrl', ['$scope', '$routeParams', '
 		$scope.images = data;
 		$scope.imagePairNumber = $routeParams.imagePair;
 		var imagePairs = Contest.pairImages(data);
+		Contest.prefillChosen(imagePairs);
 		$scope.firstImage = imagePairs[$scope.imagePairNumber - 1][0].image;
 		$scope.secondImage = imagePairs[$scope.imagePairNumber - 1][1].image;
 		$scope.choose = function (number) {

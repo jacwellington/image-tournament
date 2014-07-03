@@ -5,3 +5,6 @@
 	<img class="preview-image {{ imagePair[1].chosen }}" src="{{ imagePair[1].url }}" width="200"/>
 	<p class="choose-link"><a href="#/choose/{{ $index + 1 }}">Choose</a>
 </div>
+<div class="submit-round">
+	<p ng-click="submitRound()" ng-show="roundFinished"><a href="#">Submit Round</a></p>
+</div>

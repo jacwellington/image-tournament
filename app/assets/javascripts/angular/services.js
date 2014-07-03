@@ -1,6 +1,6 @@
-var imageTournamentServices = angular.module('imageTournamentServices', []);
+var imageTournamentServices = angular.module('imageTournamentServices', ['LocalStorageModule']);
 
-imageTournamentServices.factory('Contest', ['$http', function ($http) {
+imageTournamentServices.factory('Contest', ['$http', 'localStorageService', function ($http, localStorageService) {
 	return  {
 		currentRound: function() {
 		   return $http.get('/contest/current-round.json');
@@ -33,6 +33,21 @@ imageTournamentServices.factory('Contest', ['$http', function ($http) {
 				}
 			});
 			return imagePairs;
+		},
+		// Prefill the image objects within imagePairs with chosen values
+		// The image["chosen"] === "chosen" if the user chose that image, otherwise empty.
+		prefillChosen: function (imagePairs){
+			var i = 0;
+			for (i = 0; i < imagePairs.length; i++) {
+				var chosen = localStorageService.get((i+1).toString());
+				imagePairs[i][0]["chosen"] = "";
+				imagePairs[i][1]["chosen"] = "";
+				if (chosen !== null) {
+					imagePairs[i][0]["chosen"] = "not-chosen";
+					imagePairs[i][1]["chosen"] = "not-chosen";
+					imagePairs[i][chosen]["chosen"] = "chosen";
+				}
+			}
 		}
 	};
 }]);
