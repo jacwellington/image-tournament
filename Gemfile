@@ -32,5 +32,8 @@ gem 'uglifier'
 gem 'compass-h5bp'
 gem 'jquery-rails'
 
+# For http calls
+gem 'faraday'
+
 # Fake Content
 gem 'faker'
