@@ -1,0 +1,17 @@
+<h3>Choice {{ imagePairNumber }}</h3>
+<div class="choices">
+	<div class="first-choice">
+		<p> {{ firstImage.title }} </p>
+		<img src="{{ firstImage.url }}" />
+	</div>
+	<h3 class="vs-divider">Vs.</h3>
+	<div class="second-choice">
+		<p> {{ secondImage.title }} </p>
+		<img src="{{ secondImage.url }}" />
+	</div>
+</div>
+<div class="answer">
+	<h4>Which do you choose?</h4>
+	<p class="choice-answer" ng-click="choose(0)">First Image</p>
+	<p class="choice-answer" ng-click="choose(1)">Second Image</p>
+</div>

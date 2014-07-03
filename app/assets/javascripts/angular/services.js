@@ -19,6 +19,20 @@ imageTournamentServices.factory('Contest', ['$http', function ($http) {
 		},
 		answer: function (flickrIds, roundNumber) {
 			return $http.post('/contests/answer.json', { flick_ids: flickrIds, round: roundNumber });
+		},
+		// Takes in an array of image objects and pairs them 2 by 2
+		pairImages: function (images){
+			var imagePairs = [];
+			angular.forEach(images, function (image) {
+				if (imagePairs.length === 0) {
+					imagePairs.push([image]);
+				} else if (imagePairs[imagePairs.length - 1].length === 1) {
+					imagePairs[imagePairs.length - 1].push(image);
+				} else {
+					imagePairs.push([image]);
+				}
+			});
+			return imagePairs;
 		}
 	};
 }]);

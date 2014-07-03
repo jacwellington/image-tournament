@@ -11,4 +11,12 @@
 // about supported directives.
 //
 //= require h5bp
-
+//= require angular/angular
+//= require angular-animate/angular-animate
+//= require angular-resource/angular-resource
+//= require angular-route/angular-route
+//= require angular-sanitize/angular-sanitize
+//= require angular-local-storage
+//= require angular/app
+//= require angular/services
+//= require angular/controllers
