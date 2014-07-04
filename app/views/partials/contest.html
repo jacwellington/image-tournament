@@ -1,10 +1,19 @@
 <h3>Current Round {{ testing }}</h3>
-<div class="images" ng-repeat="imagePair in imagePairs">
-	<img class="preview-image {{ imagePair[0].chosen }}" src="{{ imagePair[0].url }}" width="200"/>
-	<span class="vs">Vs.</span>
-	<img class="preview-image {{ imagePair[1].chosen }}" src="{{ imagePair[1].url }}" width="200"/>
-	<p class="choose-link"><a href="#/choose/{{ $index + 1 }}">Choose</a>
+<p class="ng-link" ng-click="reset()">Reset</p>
+<div ng-show="lastRound">
+	<p>Winning Image</p>
+	<img src="{{ image.url }}" />
+	<p class="ng-link" ng-click="completeContest()">Complete Contest</p>
 </div>
-<div class="submit-round">
-	<p ng-click="submitRound()" ng-show="roundFinished"><a href="#">Submit Round</a></p>
+<div ng-show="!lastRound">
+	<div class="images" ng-repeat="imagePair in imagePairs">
+		<img class="preview-image {{ imagePair[0].chosen }}" src="{{ imagePair[0].url }}" width="200"/>
+		<span class="vs">Vs.</span>
+		<img class="preview-image {{ imagePair[1].chosen }}" src="{{ imagePair[1].url }}" width="200"/>
+		<p class="choose-link"><a href="#/choose/{{ $index + 1 }}">Choose</a>
+		</div>
+		<div class="submit-round">
+			<p class="ng-link" ng-click="submitRound()" ng-show="roundFinished">Submit Round</p>
+		</div>
+	</div>
 </div>

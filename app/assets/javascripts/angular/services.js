@@ -12,13 +12,13 @@ imageTournamentServices.factory('Contest', ['$http', 'localStorageService', func
 			return $http.get('/contest/round.json');
 		},
 		reset: function () {
-			return $http.post('/contests/reset.json');
+			return $http.post('/contest/reset.json');
 		},
 		done: function () {
-			return $http.post('/contests/done.json');
+			return $http.post('/contest/done.json');
 		},
 		answer: function (flickrIds, roundNumber) {
-			return $http.post('/contests/answer.json', { flick_ids: flickrIds, round: roundNumber });
+			return $http.post('/contest/answer.json', { flickr_ids: flickrIds, round: roundNumber });
 		},
 		// Takes in an array of image objects and pairs them 2 by 2
 		pairImages: function (images){

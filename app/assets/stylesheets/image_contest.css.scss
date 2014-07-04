@@ -4,3 +4,11 @@
 .not-chosen{
 	border: 5px red solid;
 }
+.ng-link{
+	color: red;
+	text-decoration: underline;
+	cursor: pointer;
+	&:hover {
+		text-decoration: none;
+	}
+}

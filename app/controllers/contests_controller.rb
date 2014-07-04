@@ -13,8 +13,11 @@ class ContestsController < ApplicationController
   end
 
   def round
-    render :json => @contest.round(params[:round]) if params[:round]
-    render_error
+    if params[:round]
+      render :json => @contest.round(params[:round])
+    else
+      error
+    end
   end
 
   def reset
@@ -22,14 +25,16 @@ class ContestsController < ApplicationController
   end
 
   def done
-    render :json => @contest.done
+    @contest.done
+    render :json => @contest.reset
   end
 
   def answer
     if params[:flickr_ids] && params[:round]
       render :json => @contest.answer(params[:flickr_ids], params[:round])
+    else
+      error
     end
-    render_error
   end
 
 
@@ -39,8 +44,8 @@ class ContestsController < ApplicationController
     @contest = Contest.new
   end
 
-  def render_error
-    render :json => {success: false}, status: 404 
+  def error
+    render :json => {success: false} 
   end
   
 end
