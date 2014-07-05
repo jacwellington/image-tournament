@@ -2,8 +2,6 @@ var imageTournamentControllers = angular.module('imageTournamentControllers', ['
 
 imageTournamentControllers.controller('ContestCtrl', ['$scope', 'localStorageService', 'Contest', '$location', '$route', function ($scope, localStorageService, Contest, $location, $route) {
 
-	$scope.loading = true;
-
 	// Get current round of images and pair them
 	Contest.currentRound().success(function (data) {
 		$scope.contest = data;
@@ -13,10 +11,12 @@ imageTournamentControllers.controller('ContestCtrl', ['$scope', 'localStorageSer
 			setupNormalRound(data);
 		}
 		$scope.reset = reset;
-		$scope.loading = false;
 		$scope.history = function (){
 			$location.url('/history');
 		};
+	}).error( function (data, status) {
+		$scope.error = true;
+		$scope.errorMessage = "Server returned an error. Please try again later.";
 	});
 
 	// Sets up the last round scope
@@ -106,7 +106,13 @@ imageTournamentControllers.controller('ChoiceCtrl', ['$scope', '$routeParams', '
 				$location.url('/#/contest');
 
 			};
+		}).error( function (data, status) {
+			$scope.error = true;
+			$scope.errorMessage = "Server returned an error. Please try again later.";
 		});
+	}).error( function (data, status) {
+		$scope.error = true;
+		$scope.errorMessage = "Server returned an error. Please try again later.";
 	});
 }]);
 
@@ -114,5 +120,11 @@ imageTournamentControllers.controller('OverviewCtrl', ['$scope', '$routeParams',
 	Contest.overview().success(function (overview) {
 		var images = overview.contest.images;
 		$scope.rounds = overview.contest.rounds;
+	}).error( function (data, status) {
+		$scope.error = true;
+		$scope.errorMessage = "Server returned an error. Please try again later.";
 	});
+	$scope.toContest = function () {
+		$location.url('/contest');
+	}
 }]);

@@ -52,18 +52,23 @@ class ContestsController < ApplicationController
     overview["contest"]["rounds"].each do |round|
       round_detail = JSON.parse(@contest.round(round["number"]));
       round["pairs"].each_with_index do |pair, index|
-        image_a = round_detail["images"][index * 2]
-        image_b = round_detail["images"][(index * 2) + 1]
-        pair["a_url"] = image_a["url"] 
-        pair["b_url"] = image_b["url"]
-        pair["a_chosen"] = ""
-        pair["b_chosen"] = ""
-        if pair["winner_ch"] == "a"
-          pair["a_chosen"] = "chosen"
-          pair["b_chosen"] = "not-chosen"
-        elsif pair["winner_ch"] == "b"
-          pair["a_chosen"] = "not-chosen"
-          pair["b_chosen"] = "chosen"
+        unless round["number"] == 5
+          image_a = round_detail["images"][index * 2]
+          image_b = round_detail["images"][(index * 2) + 1]
+          pair["a_url"] = image_a["url"] 
+          pair["b_url"] = image_b["url"]
+          pair["a_chosen"] = ""
+          pair["b_chosen"] = ""
+          if pair["winner_ch"] == "a"
+            pair["a_chosen"] = "chosen"
+            pair["b_chosen"] = "not-chosen"
+          elsif pair["winner_ch"] == "b"
+            pair["a_chosen"] = "not-chosen"
+            pair["b_chosen"] = "chosen"
+          end
+        else
+          image_a = round_detail["images"][index * 2]
+          pair["a_url"] = image_a["url"] 
         end
       end
     end

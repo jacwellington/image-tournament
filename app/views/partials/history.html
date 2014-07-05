@@ -1,9 +1,14 @@
 <h2>Contest Overview</h2>
+<p class="error" ng-show="error">Error: {{ errorMessage }}</p>
+<p class="ng-link" ng-click="toContest()">Back to contest</p>
 <div ng-repeat="round in rounds">
-	<h2>Round {{ round.number }}</h2>
+	<h2 ng-hide="round.number === 5">Round {{ round.number }}</h2>
+	<h2 ng-show="round.number === 5">Winner</h2>
 	<div ng-repeat="pair in round.pairs">
 		<img class="preview-image {{ pair.a_chosen }}" src="{{ pair.a_url }}" width="200"/>
-		<span class="vs">Vs.</span>
-		<img class="preview-image {{ pair.b_chosen }}" src="{{ pair.b_url }}" width="200"/>
+		<span ng-hide="round.number === 5">
+			<span class="vs">Vs.</span>
+			<img class="preview-image {{ pair.b_chosen }}" src="{{ pair.b_url }}" width="200"/>
+		</span>
 	</div>
 </div>
