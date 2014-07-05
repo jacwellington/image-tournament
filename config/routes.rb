@@ -6,8 +6,10 @@ ImageTournament::Application.routes.draw do
   # Partial Routes
   get "/partials/contest" => "partials#contest"
   get "/partials/choose" => "partials#choose"
+  get "/partials/history" => "partials#history"
 
   # Api routes
+  get "/contest/overview" => "contests#overview"
   get "/contest/current-round" => "contests#current_round"
   get "/contest/current-images" => "contests#current_images"
   get "/contest/round" => "contests#round"

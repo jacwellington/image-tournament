@@ -14,6 +14,9 @@ imageTournamentControllers.controller('ContestCtrl', ['$scope', 'localStorageSer
 		}
 		$scope.reset = reset;
 		$scope.loading = false;
+		$scope.history = function (){
+			$location.url('/history');
+		};
 	});
 
 	// Sets up the last round scope
@@ -104,5 +107,12 @@ imageTournamentControllers.controller('ChoiceCtrl', ['$scope', '$routeParams', '
 
 			};
 		});
+	});
+}]);
+
+imageTournamentControllers.controller('OverviewCtrl', ['$scope', '$routeParams', 'localStorageService', 'Contest', '$location', function ($scope, $routeParams, localStorageService, Contest, $location) {
+	Contest.overview().success(function (overview) {
+		var images = overview.contest.images;
+		$scope.rounds = overview.contest.rounds;
 	});
 }]);

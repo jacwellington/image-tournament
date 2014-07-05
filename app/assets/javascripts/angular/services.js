@@ -5,6 +5,9 @@ imageTournamentServices.factory('Contest', ['$http', 'localStorageService', func
 		currentRound: function() {
 		   return $http.get('/contest/current-round.json');
 		},
+		overview: function () {
+			return $http.get('/contest/overview.json');
+		},
 		imageDetails: function () {
 		   return $http.get('/contest/current-images.json');
 		},

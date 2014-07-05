@@ -4,6 +4,13 @@ class ContestsController < ApplicationController
 
   respond_to :json
 
+  def overview
+    json_overview = @contest.overview
+    overview = JSON.parse(json_overview)
+    prepare_overview(overview)
+    render :json => overview.to_json
+  end
+
   def current_round
     render :json => @contest.current_round
   end
@@ -39,6 +46,28 @@ class ContestsController < ApplicationController
 
 
   private
+
+  # Fills out the overview json by making calls to @contest.round
+  def prepare_overview(overview)
+    overview["contest"]["rounds"].each do |round|
+      round_detail = JSON.parse(@contest.round(round["number"]));
+      round["pairs"].each_with_index do |pair, index|
+        image_a = round_detail["images"][index * 2]
+        image_b = round_detail["images"][(index * 2) + 1]
+        pair["a_url"] = image_a["url"] 
+        pair["b_url"] = image_b["url"]
+        pair["a_chosen"] = ""
+        pair["b_chosen"] = ""
+        if pair["winner_ch"] == "a"
+          pair["a_chosen"] = "chosen"
+          pair["b_chosen"] = "not-chosen"
+        elsif pair["winner_ch"] == "b"
+          pair["a_chosen"] = "not-chosen"
+          pair["b_chosen"] = "chosen"
+        end
+      end
+    end
+  end
 
   def create_contest
     @contest = Contest.new

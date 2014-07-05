@@ -10,6 +10,10 @@ imageTournamentApp.config(['$routeProvider', function($routeProvider) {
 		templateUrl: 'partials/choose.html',
 		controller: 'ChoiceCtrl'
 	}).
+		when('/history', {
+		templateUrl: 'partials/history.html',
+		controller: 'OverviewCtrl'
+	}).
 		otherwise({
 		redirectTo: '/contest'
 	});

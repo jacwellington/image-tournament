@@ -1,0 +1,9 @@
+<h2>Contest Overview</h2>
+<div ng-repeat="round in rounds">
+	<h2>Round {{ round.number }}</h2>
+	<div ng-repeat="pair in round.pairs">
+		<img class="preview-image {{ pair.a_chosen }}" src="{{ pair.a_url }}" width="200"/>
+		<span class="vs">Vs.</span>
+		<img class="preview-image {{ pair.b_chosen }}" src="{{ pair.b_url }}" width="200"/>
+	</div>
+</div>

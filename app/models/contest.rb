@@ -10,6 +10,13 @@ class Contest
     end
   end
 
+  # Gets an overview of the contest from the api.
+  # @returns Overview json.
+  def overview
+    response = @connection.get "/contest/#{MPC_TOKEN}"
+    response.body
+  end
+
   # Gets the current round from the api.
   # @returns Current round json.
   def current_round
