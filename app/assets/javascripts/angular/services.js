@@ -5,7 +5,7 @@ imageTournamentServices.factory('Contest', ['$http', 'localStorageService', func
 		currentRound: function() {
 		   return $http.get('/contest/current-round.json');
 		},
-		currentImages: function () {
+		imageDetails: function () {
 		   return $http.get('/contest/current-images.json');
 		},
 		round: function () {
@@ -48,6 +48,17 @@ imageTournamentServices.factory('Contest', ['$http', 'localStorageService', func
 					imagePairs[i][chosen]["chosen"] = "chosen";
 				}
 			}
+		},
+		// Sets the title on images given a list of images and a list of details.
+		setImageTitles: function (images, imagesDetails){
+			angular.forEach(images, function (image) {
+				var flickrId = image.flick_id;
+				angular.forEach(imagesDetails, function (imageDetail) {
+					if (imageDetail.image.flickr_d === flickrId) {
+						image["title"] = imageDetail.image.title;
+					}
+				});
+			});
 		}
 	};
 }]);

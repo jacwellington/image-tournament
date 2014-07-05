@@ -89,17 +89,20 @@ imageTournamentControllers.controller('ContestCtrl', ['$scope', 'localStorageSer
 }]);
 
 imageTournamentControllers.controller('ChoiceCtrl', ['$scope', '$routeParams', 'localStorageService', 'Contest', '$location', function ($scope, $routeParams, localStorageService, Contest, $location) {
-	Contest.currentImages().success(function (data) {
-		$scope.images = data;
-		$scope.imagePairNumber = $routeParams.imagePair;
-		var imagePairs = Contest.pairImages(data);
-		Contest.prefillChosen(imagePairs);
-		$scope.firstImage = imagePairs[$scope.imagePairNumber - 1][0].image;
-		$scope.secondImage = imagePairs[$scope.imagePairNumber - 1][1].image;
-		$scope.choose = function (number) {
-			localStorageService.set($scope.imagePairNumber.toString(), number.toString());
-			$location.url('/#/contest');
+	Contest.imageDetails().success(function (imageDetails){
+		Contest.currentRound().success(function (data) {
+			$scope.images = data.images;
+			Contest.setImageTitles(data.images, imageDetails);
+			$scope.imagePairNumber = $routeParams.imagePair;
+			var imagePairs = Contest.pairImages(data.images);
+			Contest.prefillChosen(imagePairs);
+			$scope.firstImage = imagePairs[$scope.imagePairNumber - 1][0];
+			$scope.secondImage = imagePairs[$scope.imagePairNumber - 1][1];
+			$scope.choose = function (number) {
+				localStorageService.set($scope.imagePairNumber.toString(), number.toString());
+				$location.url('/#/contest');
 
-		};
+			};
+		});
 	});
 }]);
